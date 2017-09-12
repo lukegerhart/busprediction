@@ -111,11 +111,7 @@ If file `6routes.json` does not exist, your program should quit after printing t
 ERROR: file 6routes.json does not exist
 ```
 
-If file `6routes.json` exists, but the specific routeID is not there, then your program should quit after printing the following error message:
-```
-ERROR: invalid routeID: routeID
-```
-(where routeID is the rt field for that route).
+If file `6routes.json` exists, but the specific routeID is not there, then your program should simply use the value `TBD` for field `rtnm`.
 
 Every execution of `wheresmybus.py getarrivals stopID` overwrites previous versions of `myarrivals.json`, unless the program exists with an error message, in which case the previous file should persist.
 
