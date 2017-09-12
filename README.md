@@ -22,20 +22,20 @@ You can find more information about TrueTime at <http://www.portauthority.org/pa
 You program should exhibit the following behavior:
 `wheresmybus.py command optional_argument`
 
-### command = getroutes
+### (1) command = getroutes
 `wheresmybus.py getroutes` should connect to the TrueTime API and download all the available bus routes, using the `getroutes` call. Your program should do two things:
 * print the rt/rtnm fields separated by a comma, one route per line, e.g.,:
 ```
 61D, MURRAY
 65, SQUIRREL HILL
 ```
-* save the data as a json object, in a file named (`allroutes.json`), as follows:
+* save the data as a json object, in a file named `allroutes.json`, as follows:
 ```
 {{'rt':'61D', 'rtnm':'MURRAY'},
  {'rt':'65',  'rtnm':'SQUIRREL HILL'}}
 ```
 
-### command = getdirections
+### (2) command = getdirections
 `wheresmybus.py getdirections` should connect to the TrueTime API and download the available directions for all routes from `allroutes.json` **that start from a `6`** (to keep things manageable). You should keep in mind the rate limitations for the TrueTime API (10,000 requests per day), so you should implement a delay timer. As before, your program should do two things:
 * print the available rt/rtnm/direction combination for each route separated by a comma, one combination per line, e.g.,:
 ```
@@ -43,22 +43,18 @@ You program should exhibit the following behavior:
 61D, MURRAY, OUTBOUND
 65, SQUIRREL HILL, INBOUND
 65, SQUIRREL HILL, OUTBOUND
-'''
+```
 * save the data as a json object, in a file named (`6routes.json`), as follows:
 ```
 {{'rt':'61D', 'rtnm':'MURRAY', 'dir':'INBOUND'},
  {'rt':'61D', 'rtnm':'MURRAY', 'dir':'OUTBOUND'},
  {'rt':'65', 'rtnm':'SQUIRREL HILL', 'dir':'INBOUND'},
  {'rt':'65', 'rtnm':'SQUIRREL HILL', 'dir':'OUTBOUND'}}
-'''
+```
 
 
 
 
-
-
-
-``` 
  
 ### Important notes about grading
 It is absolutely imperative that your python program:  
