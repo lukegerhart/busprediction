@@ -12,7 +12,7 @@
 This is the **first assignment** for the CS 1656 -- Introduction to Data Science (CS 2056) class, for the Fall 2017 semester.
 
 ### Goal
-The goal of this assignment is to familiarize you with the Python programming language and also to be exposed to real data and real APIs.
+The goal of this assignment is to familiarize you with the Python programming language and also expose you to real data and real APIs.
 
 ### What to do -- wheresmybus.py
 You are asked to write a Python program, called `wheresmybus.py` that will act as an interface to the TrueTime API v3 of the [Port Authority of Allegheny County](http://www.portauthority.org/paac/) that provides real-time information on bus arrivals.
@@ -28,12 +28,12 @@ You program should exhibit the following behavior:
 ```
 61D, MURRAY
 65, SQUIRREL HILL
-'''
+```
 * save the data as a json object, in a file named (`allroutes.json`), as follows:
 ```
 {{'rt':'61D', 'rtnm':'MURRAY'},
  {'rt':'65',  'rtnm':'SQUIRREL HILL'}}
-'''
+```
 
 ### command = getdirections
 `wheresmybus.py getdirections` should connect to the TrueTime API and download the available directions for all routes from `allroutes.json` **that start from a `6`** (to keep things manageable). You should keep in mind the rate limitations for the TrueTime API (10,000 requests per day), so you should implement a delay timer. As before, your program should do two things:
