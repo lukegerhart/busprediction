@@ -113,7 +113,7 @@ ERROR: file 6routes.json does not exist
 
 If file `6routes.json` exists, but the specific routeID is not there, then your program should quit after printing the following error message:
 ```
-ERROR: invalid routeID combination: routeID
+ERROR: invalid routeID: routeID
 ```
 (where routeID is the rt field for that route).
 
