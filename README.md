@@ -19,8 +19,9 @@ You are asked to write a Python program, called `wheresmybus.py` that will act a
 
 You can find more information about TrueTime at <http://www.portauthority.org/paac/CompanyInfoProjects/DeveloperResources.aspx>
 
-You program should exhibit the following behavior:
-`wheresmybus.py command optional_arguments`
+You program should be invoked as:
+`python3 wheresmybus.py command optional_arguments`
+where there are four possible options for command and optional_arguments; these are specified next.
 
 ### (1) wheresmybus.py getroutes
 `wheresmybus.py getroutes` should connect to the TrueTime API and download all the available bus routes, using the `getroutes` call. Your program should do two things:
