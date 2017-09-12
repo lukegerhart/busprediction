@@ -1,4 +1,4 @@
-# Repository: 2017-01.project-1.template
+# Repository: 2017-09.project-1.template
 # Assignment #1: Python 
 
 > Course: **[CS 1656 - Introduction to Data Science](http://cs1656.org)** (CS 2056) -- Fall 2017    
@@ -15,7 +15,7 @@ This is the **first assignment** for the CS 1656 -- Introduction to Data Science
 The goal of this assignment is to familiarize you with the Python programming language and also to be exposed to real data and real APIs.
 
 ### What to do -- wheresmybus.py
-You are asked to write a Python program, called `wheresmybus.py` that will act as an interface to the TrueTime API of the [Port Authority of Allegheny County](http://www.portauthority.org/paac/) that provides real-time information on bus arrivals.
+You are asked to write a Python program, called `wheresmybus.py` that will act as an interface to the TrueTime API v3 of the [Port Authority of Allegheny County](http://www.portauthority.org/paac/) that provides real-time information on bus arrivals.
 
 You can find more information about TrueTime at <http://www.portauthority.org/paac/CompanyInfoProjects/DeveloperResources.aspx>
 
@@ -23,47 +23,41 @@ You program should exhibit the following behavior:
 `wheresmybus.py command optional_argument`
 
 ### command = getroutes
-`wheresmybus.py getroutes`
-
-
-
-
-
-
-
-that will take as input the names of two NFL teams (e.g., `Steelers` and `Patriots`), a year (e.g., `1995`), and the word `rain` (or the word `snow`), in order to determine which team "won" in terms of **total** precipitation for rain (or for snow) for the specified year (i.e., all 12 months), using weather data from `WeatherUnderground.com` for the  cities of the two teams. Winning means highest precipitation.  
-
-Your program should be called as follows:  
-`python3 team1 team2 year rain` OR `python3 team1 team2 year snow`   
-For example: `python3 weatherbowl.py steelers patriots 1998 snow`
-
-The information about the NFL team names and the corresponding cities is provided as a CSV file, named `NFL_data.csv`, which is included in this repository. Note that you should be matching even part of the team name, provided there is a single match, otherwise it would return an error message. For example, `Pit` or `pitt` or `Pittsburgh` or `Steelers` should all match `Pittburgh Steelers` and lead to using KPIT for the weather data. You should also ignore case.
-
-You should get the WeatherUnderground weather data using their historical data interface, e.g., 
-`https://www.wunderground.com/history/airport/KPIT/2016/1/1/MonthlyHistory.html?format=1`
-to get a CSV with the readings for all days in January 2016 from Pittsburgh's airport.
-
-Please note that the type of precipitation should match even if it is part of the event as well, so `snow` should also match cases of `snow-rain`, `rain-snow`, `fog-rain-snow`, etc
-
-### Output format
-Your program should report:  
-* the year 
-* the total precipitation for each team/city,  
-* the winning team, and  
-* the percent of win (i.e., if W is the total precipitation of the winning team, L is the total precipitation of the losing team, you need to report 100 * (W / L - 1)     
- 
-Here is an example of the proper output format (only used to indicate the format, the precipitation amounts are fictitious):
+`wheresmybus.py getroutes` should connect to the TrueTime API and download all the available bus routes, using the `getroutes` call. Your program should do two things:
+* print the rt/rtnm fields separated by a comma, one route per line, e.g.,:
 ```
-YEAR: 1850
-TYPE: snow 
-TEAM-1: Pittsburgh Steelers 
-CITY-1: KPIT 
-PRECIP-1: 26.5
-TEAM-2: New England Patriots 
-CITY-2: KOWD
-PRECIP-2: 25.0
-WINNER: Pittsburgh Steelers 
-PERCENT: 6.00%
+61D, MURRAY
+65, SQUIRREL HILL
+'''
+* save the data as a json object, in a file named (`allroutes.json`), as follows:
+```
+{{'rt':'61D', 'rtnm':'MURRAY'},
+ {'rt':'65',  'rtnm':'SQUIRREL HILL'}}
+'''
+
+### command = getdirections
+`wheresmybus.py getdirections` should connect to the TrueTime API and download the available directions for all routes from `allroutes.json` **that start from a `6`** (to keep things manageable). You should keep in mind the rate limitations for the TrueTime API (10,000 requests per day), so you should implement a delay timer. As before, your program should do two things:
+* print the available rt/rtnm/direction combination for each route separated by a comma, one combination per line, e.g.,:
+```
+61D, MURRAY, INBOUND
+61D, MURRAY, OUTBOUND
+65, SQUIRREL HILL, INBOUND
+65, SQUIRREL HILL, OUTBOUND
+'''
+* save the data as a json object, in a file named (`6routes.json`), as follows:
+```
+{{'rt':'61D', 'rtnm':'MURRAY', 'dir':'INBOUND'},
+ {'rt':'61D', 'rtnm':'MURRAY', 'dir':'OUTBOUND'},
+ {'rt':'65', 'rtnm':'SQUIRREL HILL', 'dir':'INBOUND'},
+ {'rt':'65', 'rtnm':'SQUIRREL HILL', 'dir':'OUTBOUND'}}
+'''
+
+
+
+
+
+
+
 ``` 
  
 ### Important notes about grading
