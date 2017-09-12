@@ -100,9 +100,9 @@ Every execution of `wheresmybus.py getstops routeID direction` overwrites previo
 * save the data as a json object, in a file named `myarrivals.json`, as follows:
 ```
 {{'rt':'61C', 'rtnm': 'MCKEESPORT-HOMESTEAD', 'rtdir':'OUTBOUND', 
-'stpid':'30', 'stopnm':'Forbes Ave past Bouquet St', 'timstmp':'20170912 01:04'},
+  'stpid':'30', 'stopnm':'Forbes Ave past Bouquet St', 'timstmp':'20170912 01:04'},
  {'rt':'61D', 'rtnm': 'MURRAY', 'rtdir':'OUTBOUND', 
- 'stpid':'30', 'stopnm':'Forbes Ave past Bouquet St', 'timstmp':'20170912 01:05'}}
+  'stpid':'30', 'stopnm':'Forbes Ave past Bouquet St', 'timstmp':'20170912 01:05'}}
 }
 ```
 
