@@ -57,12 +57,7 @@ ERROR: file allroutes.json does not exist
 ```
 
 ### (3) command = getstops
-`wheresmybus.py getstops routeID direction` should connect to the TrueTime API and using the `6routes.json` file download all the bustops for the specific routeID/direction combination specified, using the `getstops` call.
-
-
-
-
-As before, your program should do two things:
+`wheresmybus.py getstops routeID direction` should connect to the TrueTime API and using the `6routes.json` file download all the bustops for the specific routeID/direction combination specified, using the `getstops` call. As before, your program should do two things:
 * print the available stpid/stpnm for each stop, separated by a comma, e.g.:
 ```
 18161, 5TH AVE + DIAMOND ST
@@ -72,8 +67,8 @@ As before, your program should do two things:
 ```
 {{'rt':'61D', 'rtnm':'MURRAY', 'dir':'INBOUND'},
  stops: {
-     {'stpid': '18161', 'stpnm': '5TH AVE + DIAMOND ST'},
-     {'stpid': '2644', 'stpnm': '5th Ave opp #2358'}
+     {'stpid':'18161', 'stpnm':'5TH AVE + DIAMOND ST'},
+     {'stpid':'2644', 'stpnm':'5th Ave opp #2358'}
 	    }
 }
 ```
@@ -88,15 +83,28 @@ If file `6routes.json` exists, but the specific routeID/direction combination is
 ```
 ERROR: invalid route/direction combination: routeID/directon
 ```
-(where routeID/directon are the command line arguments to `wheresmybus.py getstops`)
+(where routeID/directon are the command line arguments to `wheresmybus.py getstops`).
+Every execution of `wheresmybus.py getstops routeID direction` overwrites previous versions of `mystops.json`
+
+### (4) command = getarrivals
+`wheresmybus.py getarrivals stopID` should connect to the TrueTime API and download all the available predicted arrival times for the specified bus stop, using the `getpredictions` call. Your program should do two things:
+* print the rt/rtdir/stpid/stopnm/timstmp fields separated by a comma, one arrival per line, e.g.,:
+```
+61C, OUTBOUND, 30, Forbes Ave past Bouquet St, 20170912 01:04
+61D, OUTBOUND, 30, Forbes Ave past Bouquet St, 20170912 01:05
+```
+* save the data as a json object, in a file named `myarrivals.json`, as follows:
+```
+{{'rt':'61C', 'rtdir':'OUTBOUND', 'stpid':'30', 'stopnm':'Forbes Ave past Bouquet St', 'timstmp':'20170912 01:04'},
+ {'rt':'61D', 'rtdir':'OUTBOUND', 'stpid':'30', 'stopnm':'Forbes Ave past Bouquet St', 'timstmp':'20170912 01:05'}}
+}
+```
+Every execution of `wheresmybus.py getarrivals stopID` overwrites previous versions of `myarrivals.json`
 
 
-
- 
 ### Important notes about grading
 It is absolutely imperative that your python program:  
-* runs without any syntax or other errors (using Python 3) -- we will run it using the following command:  
-`python3 team1 team2 year rain` OR `python3 team1 team2 year snow`  
+* runs without any syntax or other errors (using Python 3)  
 * strictly adheres to the format specifications for input and output, as explained above.     
 
 Failure in any of the above will result in **severe** point loss. 
@@ -117,7 +125,7 @@ requests
 string
 sys
 ```
-If you would like to use any other libraries, you must ask permission by Wednesday, January 25, 2017, using [piazza](http://piazza.cs1656.org).
+If you would like to use any other libraries, you must ask permission by Friday, September 15, 2017, using [piazza](http://piazza.cs1656.org).
 
 
 ### About your github account
@@ -128,7 +136,7 @@ It is very important that:
 
 ### How to submit your assignment
 For this assignment, you must use the repository that was created for you after visiting the classroom link. You need to update the repository to include file `weatherbowl.py` as described above, and other files that are needed for running your program. You need to make sure to commit your code to the repository provided. We will clone all repositories shortly after midnight:  
-* the day of the deadline **Sunday, January 29th, 2017 (i.e., at 12:15am, Monday, January 30, 2017)**  
+* the day of the deadline **Monday, September 25th, 2017 (i.e., at 12:15am, Tuesday, September 26, 2017)**  
 * 24 hours later (for submissions that are one day late / -5 points), and  
 * 48 hours after the first deadline (for submissions that are two days late / -15 points). 
 
