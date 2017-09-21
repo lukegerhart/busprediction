@@ -4,10 +4,21 @@ import json
 import sys
 
 #function definitions
+def response_error(response):
+	try:
+		error = response['error']
+		return error
+	except KeyError:
+		return None
+
 def get_data_feed():
 	r = requests.get('http://truetime.portauthority.org/bustime/api/v3/getrtpidatafeeds', params={'key':'k2HrcvhLbdHdxHHKpJnRgr7bj', 'format':'json'})
-	response = r.json()
-	feeds = response['bustime-response']['rtpidatafeeds']
+	response = r.json()['bustime-response']
+	error = response_error(response)
+	if error is not None:
+		print('There was an error with the API call: ' + error)
+		exit()
+	feeds = response['rtpidatafeeds']
 	datafeed = ''
 	for feed in feeds:
 		if feed['enabled'] == 'true':
@@ -17,8 +28,12 @@ def get_data_feed():
 #getroutes
 if sys.argv[1] == 'getroutes':
 	r = requests.get('http://truetime.portauthority.org/bustime/api/v3/getroutes', params={'key':'k2HrcvhLbdHdxHHKpJnRgr7bj', 'format':'json'})
-	response = r.json()
-	routes = response['bustime-response']['routes']
+	response = r.json()['bustime-response']
+	error = response_error(response)
+	if error is not None:
+		print('There was an error with the API call: ' + error)
+		exit()
+	routes = response['routes']
 	routes_list = []
 	new_route = ''
 	for route in routes:
@@ -51,7 +66,12 @@ elif sys.argv[1] == 'getdirections':
 		if route['rt'].startswith('6'):
 			param_dict = {'key':'k2HrcvhLbdHdxHHKpJnRgr7bj', 'format':'json', 'rt':route['rt'], 'rtpidatafeed':datafeed}
 			r = requests.get('http://truetime.portauthority.org/bustime/api/v3/getdirections', params=param_dict)
-			directions = r.json()['bustime-response']['directions']
+			response = r.json()['bustime-response']
+			error = response_error(response)
+			if error is not None:
+				print('There was an error with the API call: ' + error)
+				exit()
+			directions = response['directions']
 			for direction in directions:
 				#print result
 				print(route['rt'] + ', ' + route['rtnm'] + ', ' + direction['name'])
@@ -90,8 +110,10 @@ elif sys.argv[1] == 'getstops':
 	param_dict = {'key':'k2HrcvhLbdHdxHHKpJnRgr7bj', 'format':'json', 'rt':route_id, 'dir':direction, 'rtpidatafeed':datafeed}
 	r = requests.get('http://truetime.portauthority.org/bustime/api/v3/getstops', params=param_dict)
 	response = r.json()['bustime-response']
-	
-	
+	error = response_error(response)
+	if error is not None:
+		print('There was an error with the API call: ' + error)
+		exit()
 	stops = response['stops']
 	
 	inner_stops = []
@@ -123,7 +145,24 @@ elif sys.argv[1] == 'getarrivals':
 	
 	param_dict = {'key':'k2HrcvhLbdHdxHHKpJnRgr7bj', 'format':'json', 'stpid':stpid, 'rtpidatafeed':datafeed}
 	r = requests.get('http://truetime.portauthority.org/bustime/api/v3/getpredictions', params=param_dict)
-	print(r.json()['bustime-response'])
+	response = r.json()['bustime-response']
+	error = response_error(response)
+	if error is not None:
+		print('There was an error with the API call: ' + error)
+		exit()
+	predictions = response['prd']
+	stop_info = []
+	for prd in predictions:
+		rtnm = 'TBD'
+		for dir in dirs_list:
+			if prd['rt'] == dir['rt']:
+				rtnm = dir['rtnm']
+		print('%s, %s, %s, %s, %s, %s' % (prd['rt'], rtnm, prd['rtdir'], prd['stpid'], prd['stpnm'], prd['tmstmp']))
+		bus_info = {'rt':prd['rt'], 'rtn':rtnm, 'rtdir':prd['rtdir'], 'stpid':prd['stpid'], 'stopnm':prd['stpnm'], 'timstmp':prd['tmstmp']}
+		stop_info.append(bus_info)
+	stop_file = open('myarrivals.json', 'w')
+	stop_file.write(json.dumps(stop_info))
+	stop_file.close()
 else:
 	print('Error: run program as python3 wheresmybus.py command optional_arguments')
 	exit()
