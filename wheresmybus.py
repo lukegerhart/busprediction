@@ -7,7 +7,7 @@ import sys
 def response_error(response):
 	try:
 		error = response['error']
-		return error
+		return str(error)
 	except KeyError:
 		return None
 
@@ -142,7 +142,7 @@ elif sys.argv[1] == 'getarrivals':
 	
 	datafeed = get_data_feed()
 	
-	param_dict = {'key':'k2HrcvhLbdHdxHHKpJnRgr7bj', 'format':'json', 'stpid':stpid, 'rtpidatafeed':datafeed}
+	param_dict = {'key':'k2HrcvhLbdHdxHHKpJnRgr7bj', 'format':'json', 'stpid':'a', 'rtpidatafeed':datafeed}
 	r = requests.get('http://truetime.portauthority.org/bustime/api/v3/getpredictions', params=param_dict)
 	response = r.json()['bustime-response']
 	error = response_error(response)
