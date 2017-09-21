@@ -40,7 +40,6 @@ if sys.argv[1] == 'getroutes':
 		rt = route['rt']
 		rtnm = route['rtnm']
 		print(rt + ', ' + rtnm)
-		#new_route = '{\'rt\':\'' + rt + '\', \'rtnm\':\'' + rtnm +'\'}' 
 		new_route = {'rt':rt, 'rtnm':rtnm}
 		routes_list.append(new_route)
 	all_routes = open('allroutes.json', 'w')
