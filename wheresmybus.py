@@ -18,6 +18,7 @@ for route in routes:
 	routes_list.append(new_route)
 all_routes = open('allroutes.json', 'w')
 all_routes.write(json.dumps(routes_list, sort_keys=True))
+all_routes.close()
 """
 """
 for i in range(0, len(routes_list)):
@@ -28,13 +29,10 @@ for i in range(0, len(routes_list)):
 	else:
 		all_routes.write(' ' + str(routes_list[i]) + ',\n')
 """
-"""
-all_routes.close()
-"""
+
 #getdirections
-
+"""
 all_routes = None
-
 try:
 	all_routes = open('allroutes.json', 'r')
 except FileNotFoundError:
@@ -42,15 +40,59 @@ except FileNotFoundError:
 	exit()
 routes_list = json.loads(all_routes.read())
 all_routes.close()
+
+#get datafeed
+r = requests.get('http://truetime.portauthority.org/bustime/api/v3/getrtpidatafeeds', params={'key':'k2HrcvhLbdHdxHHKpJnRgr7bj', 'format':'json'})
+response = r.json()
+feeds = response['bustime-response']['rtpidatafeeds']
+datafeed = ''
+for feed in feeds:
+	if feed['enabled'] == 'true':
+		datafeed = feed['name']
+
+#get directions for each route
+dirs_list = []
 for route in routes_list:
 	if route['rt'].startswith('6'):
-		param_dict = {'key':'k2HrcvhLbdHdxHHKpJnRgr7bj', 'format':'json', 'rt':route['rt'], 'rtpidatafeed':'acmeta'}
-		#r = requests.get('http://truetime.portauthority.org/bustime/api/v3/getdirections', params=param_dict)
-		r = requests.get('http://truetime.portauthority.org/bustime/api/v3/getdirections', params={'key':'k2HrcvhLbdHdxHHKpJnRgr7bj', 'format':'json'55}
-		response = r.json()
-		directions = response['bustime-response']#['directions']
-		print(directions)
-		#for direction in directions:
-			#print(route['rt'] + ', ' + route['rtnm'] + ', ' + direction['name'])
+		param_dict = {'key':'k2HrcvhLbdHdxHHKpJnRgr7bj', 'format':'json', 'rt':route['rt'], 'rtpidatafeed':datafeed}
+		r = requests.get('http://truetime.portauthority.org/bustime/api/v3/getdirections', params=param_dict)
+		directions = r.json()['bustime-response']['directions']
+		#print(directions)
+		for direction in directions:
+			print(route['rt'] + ', ' + route['rtnm'] + ', ' + direction['name'])
+			dir = {'rt':route['rt'], 'rtnm':route['rtnm'], 'dir':direction['name']}
+			dirs_list.append(dir)
+
+all_dirs = open('6routes.json', 'w')
+all_dirs.write(json.dumps(dirs_list))
+all_dirs.close()
+"""
+#getstops
+
+all_dirs = None
+try:
+	all_dirs = open('6routes.json', 'r')
+except FileNotFoundError:
+	print('ERROR: file 6routes.json does not exist')
+	exit()
+dirs_list = json.loads(all_dirs.read())
+all_dirs.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #r = requests.get('http://truetime.portauthority.org/bustime/api/v3/getroutes', params={'key':'k2HrcvhLbdHdxHHKpJnRgr7bj', 'format':'json', 'rt':''})
