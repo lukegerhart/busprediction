@@ -1,4 +1,4 @@
-{{'rt':'61D', 'rtnm':'MURRAY', 'dir':'INBOUND'},
+[{'rt':'61D', 'rtnm':'MURRAY', 'dir':'INBOUND'},
  {'rt':'61D', 'rtnm':'MURRAY', 'dir':'OUTBOUND'},
  {'rt':'65', 'rtnm':'SQUIRREL HILL', 'dir':'INBOUND'},
- {'rt':'65', 'rtnm':'SQUIRREL HILL', 'dir':'OUTBOUND'}}
+ {'rt':'65', 'rtnm':'SQUIRREL HILL', 'dir':'OUTBOUND'}]

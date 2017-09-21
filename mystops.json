@@ -1,6 +1,7 @@
-{{'rt':'61D', 'dir':'INBOUND'},
- stops: {
+{'rt':'61D', 
+ 'dir':'INBOUND',
+ 'stops': [
      {'stpid':'18161', 'stpnm':'5TH AVE + DIAMOND ST'},
      {'stpid':'2644', 'stpnm':'5th Ave opp #2358'}
- }
+ ]
 }
